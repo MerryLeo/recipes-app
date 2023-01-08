@@ -1,8 +1,9 @@
 import Head from "next/head";
-import { AppShell, MantineProvider } from '@mantine/core';
+import { AppShell, Footer, Header, Text, MantineProvider } from '@mantine/core';
 import { PropsWithChildren } from "react";
-import PageHeader from './header';
-import PageFooter from "./footer";
+
+const appTitle: string = 'Recipe Application';
+const copyright: string = 'Copyright Léo Taillon 2023';
 
 export default function Layout({ children }: PropsWithChildren): JSX.Element {
     return (
@@ -22,8 +23,11 @@ export default function Layout({ children }: PropsWithChildren): JSX.Element {
                 }}
             >
                 <AppShell
-                    header={<PageHeader></PageHeader>}
-                    footer={<PageFooter></PageFooter>}
+                    header={
+                        <Header height={{ base: 50, md: 70 }} p='md'>
+                            <Text>{appTitle}</Text>
+                        </Header>}
+                    footer={<Footer height={{ base: 60, md: 60 }} p='md'>{copyright}</Footer>}
                 >
                     {children}
                 </AppShell>
