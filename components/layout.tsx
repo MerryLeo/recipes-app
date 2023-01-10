@@ -23,10 +23,7 @@ export default function Layout({ children }: PropsWithChildren): JSX.Element {
                 }}
             >
                 <AppShell
-                    header={
-                        <Header height={{ base: 50, md: 70 }} p='md'>
-                            <Text>{appTitle}</Text>
-                        </Header>}
+                    header={<Header height={{ base: 50, md: 70 }} p='md'><Text>{appTitle}</Text></Header>}
                     footer={<Footer height={{ base: 60, md: 60 }} p='md'>{copyright}</Footer>}
                 >
                     {children}
