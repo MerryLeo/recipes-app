@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { AppShell, Footer, Header, Text, MantineProvider } from '@mantine/core';
+import { AppShell, Footer, Header, Text, MantineProvider, Title } from '@mantine/core';
 import { PropsWithChildren } from "react";
 
 const appTitle: string = 'Recipe Application';
@@ -23,8 +23,16 @@ export default function Layout({ children }: PropsWithChildren): JSX.Element {
                 }}
             >
                 <AppShell
-                    header={<Header height={{ base: 50, md: 70 }} p='md'><Text>{appTitle}</Text></Header>}
-                    footer={<Footer height={{ base: 60, md: 60 }} p='md'>{copyright}</Footer>}
+                    header={
+                        <Header height={{ base: 50, md: 90 }} p='md'>
+                            <Title order={1}>{appTitle}</Title>
+                        </Header>
+                    }
+                    footer={
+                        <Footer height={{ base: 60, md: 60 }} p='md'>
+                            <Text>{copyright}</Text>
+                        </Footer>
+                    }
                 >
                     {children}
                 </AppShell>
