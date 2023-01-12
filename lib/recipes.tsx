@@ -1,9 +1,9 @@
 export interface RecipeResult {
     count: number,
-    results: Recipe[]
+    results: RecipeSummary[]
 };
 
-export interface Recipe {
+export interface RecipeSummary {
     is_one_top: boolean
     cook_time_minutes: number | null
     promotion: string
@@ -187,8 +187,169 @@ export interface Recipe {
     [k: string]: unknown
 }
 
+export type RecipeInfo = {
+    brand: any
+    renditions: Array<{
+        url: string
+        name: string
+        width: number
+        duration: number
+        minimum_bit_rate?: number
+        content_type: string
+        aspect: string
+        poster_url: string
+        height: number
+        file_size?: number
+        bit_rate?: number
+        maximum_bit_rate?: number
+        container: string
+    }>
+    country: string
+    inspired_by_url: string
+    seo_title: any
+    video_url: string
+    compilations: Array<{
+        approved_at: number
+        beauty_url: any
+        buzz_id: any
+        id: number
+        language: string
+        slug: string
+        thumbnail_alt_text: string
+        thumbnail_url: string
+        show: Array<{
+        id: number
+        name: string
+        }>
+        aspect_ratio: string
+        draft_status: string
+        is_shoppable: boolean
+        video_id: number
+        video_url: string
+        facebook_posts: Array<any>
+        keywords: any
+        country: string
+        created_at: number
+        description?: string
+        name: string
+        promotion: string
+        canonical_id: string
+    }>
+    nutrition: {
+        sugar: number
+        fiber: number
+        updated_at: string
+        calories: number
+        carbohydrates: number
+        fat: number
+        protein: number
+    }
+    created_at: number
+    prep_time_minutes: any
+    updated_at: number
+    credits: Array<{
+        name: string
+        type: string
+    }>
+    original_video_url: string
+    sections: Array<{
+        components: Array<{
+        id: number
+        raw_text: string
+        extra_comment: string
+        position: number
+        measurements: Array<{
+            id: number
+            quantity: string
+            unit: {
+            display_singular: string
+            display_plural: string
+            system: string
+            name: string
+            abbreviation: string
+            }
+        }>
+        ingredient: {
+            id: number
+            name: string
+            display_singular: string
+            display_plural: string
+            created_at: number
+            updated_at: number
+        }
+        }>
+        name: any
+        position: number
+    }>
+    user_ratings: {
+        count_positive: number
+        count_negative: number
+        score: number
+    }
+    price: {
+        total: number
+        updated_at: string
+        portion: number
+        consumption_total: number
+        consumption_portion: number
+    }
+    approved_at: number
+    aspect_ratio: string
+    is_one_top: boolean
+    servings_noun_plural: string
+    tips_and_ratings_enabled: boolean
+    show: {
+        id: number
+        name: string
+    }
+    beauty_url: any
+    is_shoppable: boolean
+    keywords: string
+    num_servings: number
+    nutrition_visibility: string
+    promotion: string
+    show_id: number
+    total_time_tier: any
+    canonical_id: string
+    description: any
+    id: number
+    tags: Array<{
+        id: number
+        name: string
+        display_name: string
+        type: string
+    }>
+    facebook_posts: Array<any>
+    thumbnail_alt_text: string
+    thumbnail_url: string
+    yields: string
+    brand_id: any
+    buzz_id: number
+    draft_status: string
+    language: string
+    servings_noun_singular: string
+    instructions: Array<{
+        start_time: number
+        end_time: number
+        temperature?: number
+        appliance?: string
+        id: number
+        display_text: string
+        position: number
+    }>
+    video_ad_content: string
+    topics: Array<{
+        slug: string
+        name: string
+    }>
+    cook_time_minutes: any
+    name: string
+    slug: string
+    total_time_minutes: any
+    video_id: number
+}
 
-const options: RequestInit = {
+const option: RequestInit = {
     method: 'GET',
     headers: {
         'X-RapidAPI-Key': process.env.NEXT_PUBLIC_API_KEY!,
@@ -198,12 +359,29 @@ const options: RequestInit = {
 
 export function getRecipes(from: number, size: number): Promise<RecipeResult | null> {
     return fetch(
-        'https://tasty.p.rapidapi.com/recipes/list?' + 
+        process.env.NEXT_PUBLIC_RECIPE_SUMMARY_URL + '?' + 
         new URLSearchParams({ 'from': from.toString(), 'size': size.toString()}), 
-        options)
+        option)
         .then(res => res.json())
         .then(res => {
             return res as RecipeResult;
+        })
+        .catch(() => null);
+}
+
+export function getRecipeCount(): Promise<number | null> {
+    return getRecipes(0, 0)
+        .then((recipe) => recipe?.count ?? null);
+}
+
+export function getRecipeInfos(id: number): Promise<RecipeInfo | null> {
+    return fetch(
+        process.env.NEXT_PUBLIC_RECIPE_INFO_URL + '?' +
+        new URLSearchParams({'id': id.toString()}),
+        option)
+        .then(res => res.json())
+        .then(res => {
+            return res as RecipeInfo;
         })
         .catch(() => null);
 }

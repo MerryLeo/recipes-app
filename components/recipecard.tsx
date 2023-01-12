@@ -1,7 +1,8 @@
 import { Card, Group, Badge, Button, Image, Text } from "@mantine/core";
-import { Recipe } from "../lib/recipes";
+import Link from "next/link";
+import { RecipeSummary } from "../lib/recipes";
 
-export default function RecipeCard(props: { recipe: Recipe }): JSX.Element {
+export default function RecipeCard(props: { recipe: RecipeSummary }): JSX.Element {
     const { recipe } = props;
     return (
         <Card shadow='sm' p='lg' radius='md' withBorder>
@@ -31,9 +32,11 @@ export default function RecipeCard(props: { recipe: Recipe }): JSX.Element {
             <Text size='sm' color='dimmed' align='justify'>
                 <div dangerouslySetInnerHTML={{ __html: recipe.description}} />
             </Text>
-            <Button variant='light' color='blue' fullWidth mt='md' radius='md' >
-                See more
-            </Button>
+            <Link href={'recipes/' + recipe.id}>
+                <Button variant='light' color='blue' fullWidth mt='md' radius='md'>
+                    See more
+                </Button>
+            </Link>
         </Card>
     );
 }
