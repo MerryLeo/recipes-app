@@ -1,4 +1,5 @@
-import { Card, Group, Badge, Button, Image, Text } from "@mantine/core";
+import Image from 'next/image';
+import { Card, Group, Badge, Button, Text } from "@mantine/core";
 import Link from "next/link";
 import { RecipeSummary } from "../lib/recipes";
 import styles from './recipecard.module.css';
@@ -8,11 +9,13 @@ export default function RecipeCard(props: { recipe: RecipeSummary }): JSX.Elemen
     return (
         <Card shadow='sm' p='lg' radius='md' withBorder>
             <Card.Section>
-                <Image
-                    src={recipe?.thumbnail_url}
-                    width={450}
-                    alt={recipe?.thumbnail_alt_text}
-                />
+                <div className={styles.cardImg}>
+                    <Image
+                        src={recipe?.thumbnail_url}
+                        alt={recipe?.thumbnail_alt_text}
+                        fill
+                    />
+                </div>
             </Card.Section>
             <Text weight={500} mt='md'>{recipe.name}</Text>
             <Group position='left' mt='xs' mb='xs'>

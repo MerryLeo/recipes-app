@@ -1,3 +1,12 @@
 .noLink {
     text-decoration: none;
 }
+
+.cardImg {
+    position: relative;
+    height: 250px;
+}
+
+.cardImg > * {
+    object-fit: cover;
+}

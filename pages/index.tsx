@@ -4,9 +4,11 @@ import { InferGetStaticPropsType, GetStaticProps } from 'next';
 import { getRecipes, RecipeResult } from '../lib/recipes';
 import RecipeCard from '../components/recipecard';
 
+const pageSize: number = 10;
+
 export const getStaticProps: GetStaticProps<{ recipes: RecipeResult }> = async () => ({
     props: {
-      recipes: await getRecipes(0, 30) ?? { count: 0, results: []},
+      recipes: await getRecipes(0, pageSize) ?? { count: 0, results: []},
     },
   });
 
@@ -15,9 +17,9 @@ export default function Home({ recipes }: InferGetStaticPropsType<typeof getStat
   return (
     <Layout>
       <Stack>
-        <Grid m='sm' gutter='xl'>
+        <Grid columns={3} m='sm' gutter='xl'>
             {results.map((value, key) => (
-              <Grid.Col span={3} key={key}>
+              <Grid.Col span={1} key={key}>
                 <RecipeCard recipe={value} />
               </Grid.Col>
             ))}
