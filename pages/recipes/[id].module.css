@@ -1,0 +1,8 @@
+.jumboImg {
+    position: relative;
+    height: max(35vh, 300px);
+}
+
+.jumboImg > * {
+    object-fit: contain;
+}

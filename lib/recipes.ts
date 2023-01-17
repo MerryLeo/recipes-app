@@ -13,6 +13,7 @@ export interface RecipeSummary {
         id?: number
         [k: string]: unknown
     }
+    recipes: RecipeSummary[]
     servings_noun_plural: string
     canonical_id: string
     show_id: number
@@ -187,7 +188,7 @@ export interface RecipeSummary {
     [k: string]: unknown
 }
 
-export type RecipeInfo = {
+export interface RecipeInfo {
     brand: any
     renditions: Array<{
         url: string
