@@ -1,6 +1,7 @@
 import { Card, Group, Badge, Button, Image, Text } from "@mantine/core";
 import Link from "next/link";
 import { RecipeSummary } from "../lib/recipes";
+import styles from './recipecard.module.css';
 
 export default function RecipeCard(props: { recipe: RecipeSummary }): JSX.Element {
     const { recipe } = props;
@@ -9,7 +10,7 @@ export default function RecipeCard(props: { recipe: RecipeSummary }): JSX.Elemen
             <Card.Section>
                 <Image
                     src={recipe?.thumbnail_url}
-                    height={250}
+                    width={450}
                     alt={recipe?.thumbnail_alt_text}
                 />
             </Card.Section>
@@ -32,7 +33,7 @@ export default function RecipeCard(props: { recipe: RecipeSummary }): JSX.Elemen
             <Text size='sm' color='dimmed' align='justify'>
                 <div dangerouslySetInnerHTML={{ __html: recipe.description}} />
             </Text>
-            <Link href={'recipes/' + recipe.id}>
+            <Link href={'recipes/' + recipe.id} className={styles.noLink}>
                 <Button variant='light' color='blue' fullWidth mt='md' radius='md'>
                     See more
                 </Button>

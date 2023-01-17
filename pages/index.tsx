@@ -6,7 +6,7 @@ import RecipeCard from '../components/recipecard';
 
 export const getStaticProps: GetStaticProps<{ recipes: RecipeResult }> = async () => ({
     props: {
-      recipes: await getRecipes(1, 30) ?? { count: 0, results: []},
+      recipes: await getRecipes(0, 30) ?? { count: 0, results: []},
     },
   });
 

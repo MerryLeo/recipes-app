@@ -1,7 +1,9 @@
-import { GetServerSideProps, GetStaticPaths, GetStaticProps, GetStaticPropsContext, InferGetServerSidePropsType, InferGetStaticPropsType } from "next";
+import { Container, Title } from "@mantine/core";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import Image from "next/image";
 import { ParsedUrlQuery } from "querystring";
 import Layout from "../../components/layout";
-import { getRecipeInfos, getRecipes, getRecipeCount, RecipeResult, RecipeSummary, RecipeInfo } from "../../lib/recipes";
+import { getRecipeInfos, RecipeInfo } from "../../lib/recipes";
 
 interface RouteParam extends ParsedUrlQuery {
     id: string,
@@ -25,7 +27,16 @@ export const getServerSideProps: GetServerSideProps<{ recipeInfo: RecipeInfo }, 
 export default function RecipePage({ recipeInfo }: InferGetServerSidePropsType<typeof getServerSideProps>): JSX.Element {
     return (
         <Layout>
-            <div>{recipeInfo.name}</div>
+            <Title order={2} align='center'>{recipeInfo.name}</Title>
+            {recipeInfo.thumbnail_url && (
+                <Container size='md'>
+                    <Image 
+                        src={recipeInfo.thumbnail_url}
+                        fill={true}
+                        alt={recipeInfo.thumbnail_alt_text} 
+                    />
+                </Container>
+            )}
         </Layout>
     );
 }
