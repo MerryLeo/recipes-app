@@ -1,11 +1,29 @@
 import Image from 'next/image';
-import { Card, Group, Badge, Button, Text } from "@mantine/core";
+import { Card, Group, Badge, Button, Text, Avatar } from "@mantine/core";
 import Link from "next/link";
 import { RecipeSummary } from "../lib/recipes";
 import cardStyles from './recipecard.module.css';
+import { IconCooker, IconSlice } from '@tabler/icons';
 
 export default function RecipeCard(props: { recipe: RecipeSummary }): JSX.Element {
     const { recipe } = props;
+    const cookingAvatar: JSX.Element = (
+        <Avatar 
+            size={20} 
+            alt='Cooking time'
+            mr={0}>
+            <IconCooker />
+        </Avatar>);
+
+    const preparingAvatar: JSX.Element = (
+        <Avatar 
+            size={20} 
+            alt='Cooking time'
+            mr={0}>
+            <IconSlice />
+        </Avatar>
+    );
+
     return (
         <Card shadow='sm' p='lg' radius='md' withBorder>
             <Card.Section>
@@ -22,21 +40,21 @@ export default function RecipeCard(props: { recipe: RecipeSummary }): JSX.Elemen
                 
                 {/* Cook Time */}
                 {recipe.cook_time_minutes && (
-                    <Badge color='red' variant='light'>
-                        cook {recipe.cook_time_minutes} min
+                    <Badge size='md' color='red' variant='light' leftSection={cookingAvatar}>
+                        {recipe.cook_time_minutes} min
                     </Badge>
                 )}
 
                 {/* Preparation Time */}
                 {recipe.prep_time_minutes && (
-                    <Badge color='blue' variant='light'>
-                        prep {recipe.prep_time_minutes} min
+                    <Badge size='md' color='blue' variant='light' leftSection={preparingAvatar}>
+                        {recipe.prep_time_minutes} min
                     </Badge>
                 )}
 
                 {/* Servings */}
                 {recipe.num_servings && (
-                    <Badge color='blue' variant='light'>
+                    <Badge size='md' color='violet' variant='light'>
                         {recipe.num_servings} {(recipe.num_servings > 1) ? recipe.servings_noun_plural : recipe.servings_noun_singular}
                     </Badge>
                 )}

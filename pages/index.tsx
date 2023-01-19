@@ -30,7 +30,6 @@ export const getStaticProps: GetStaticProps<{ recipes: RecipeResult }> = async (
 
 export default function Home({ recipes }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
   const { results } = recipes;
-  console.log(results);
   return (
     <Layout>
       <Head>
