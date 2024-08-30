@@ -358,31 +358,34 @@ const option: RequestInit = {
     },
 };
 
-export function getRecipes(from: number, size: number): Promise<RecipeResult | null> {
-    return fetch(
-        process.env.NEXT_PUBLIC_RECIPE_SUMMARY_URL + '?' + 
-        new URLSearchParams({ 'from': from.toString(), 'size': size.toString()}), 
-        option)
-        .then(res => res.json())
-        .then(res => {
-            return res as RecipeResult;
-        })
-        .catch(() => null);
+export async function getRecipes(from: number, size: number): Promise<RecipeResult | null> {
+    try {
+        const res = await fetch(
+            process.env.NEXT_PUBLIC_RECIPE_SUMMARY_URL + '?' +
+            new URLSearchParams({ 'from': from.toString(), 'size': size.toString() }),
+            option)
+        const res_1 = await res.json()
+        return res_1 as RecipeResult
+    } catch (ex: any) {
+        console.log(`Failed to fetch recipes from api: ${ex}`);
+        return null
+    }
 }
 
-export function getRecipeCount(): Promise<number | null> {
-    return getRecipes(0, 0)
-        .then((recipe) => recipe?.count ?? null);
+export async function getRecipeCount(): Promise<number | null> {
+    const recipe = await getRecipes(0, 0)
+    return recipe?.count ?? null
 }
 
-export function getRecipeInfos(id: number): Promise<RecipeInfo | null> {
-    return fetch(
-        process.env.NEXT_PUBLIC_RECIPE_INFO_URL + '?' +
-        new URLSearchParams({'id': id.toString()}),
-        option)
-        .then(res => res.json())
-        .then(res => {
-            return res as RecipeInfo;
-        })
-        .catch(() => null);
+export async function getRecipeInfos(id: number): Promise<RecipeInfo | null> {
+    try {
+        const res = await fetch(
+            process.env.NEXT_PUBLIC_RECIPE_INFO_URL + '?' +
+            new URLSearchParams({ 'id': id.toString() }),
+            option)
+        const res_1 = await res.json()
+        return res_1 as RecipeInfo
+    } catch {
+        return null
+    }
 }
